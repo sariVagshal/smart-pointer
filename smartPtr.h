@@ -11,19 +11,20 @@ public:
     T* operator->() const;
     T& operator*()  const;
 
+	UniquePtr& operator= (T* ptr);
+	void reset();
+	
 	operator bool() const;
 	
     T* get() const;
 
 private:
-    // Prevent coping 
+    // Prevent copying 
     UniquePtr(UniquePtr const&);
     UniquePtr& operator=(UniquePtr const&);
 
     T*   m_ptr;
 };
-
-
 
 template<typename T>
 UniquePtr<T>::UniquePtr(T* ptr)
@@ -51,6 +52,19 @@ T& UniquePtr<T>::operator*()  const
 	if (!m_ptr)
 		throw std::invalid_argument::invalid_argument();
 	return *m_ptr;
+}
+
+template<typename T>
+UniquePtr<T>& operator= (T* ptr)
+{
+	delete m_ptr;
+	m_ptr = ptr;
+}
+
+template<typename T>
+void UniquePtr<T>::reset()
+{
+	m_ptr = NULL;
 }
 
 template<typename T>
