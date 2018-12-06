@@ -40,12 +40,16 @@ UniquePtr<T>::~UniquePtr()
 template<typename T>
 T* UniquePtr<T>::operator->() const
 {
+	if (!m_ptr)
+		throw std::invalid_argument;
 	return m_ptr;
 }
 
 template<typename T>
 T& UniquePtr<T>::operator*()  const
 {
+	if (!m_ptr)
+		throw std::invalid_argument;
 	return *m_ptr;
 }
 
