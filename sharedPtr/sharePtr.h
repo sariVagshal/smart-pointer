@@ -14,6 +14,8 @@ public:
     T& operator*()  const;
 
 	SharedPtr& operator= (const SharedPtr& ptr);
+	SharedPtr& operator= (T * ptr);
+	
 	void reset();
 	
 	bool operator!=(const SharedPtr&) const;
@@ -71,6 +73,17 @@ T& SharedPtr<T>::operator*()  const
 
 template<typename T>
 SharedPtr<T>& SharedPtr<T>::operator=(const SharedPtr<T>& ptr)
+{
+	--(*refCount);
+	if(*refCount == 0)
+		delete m_ptr;
+	m_ptr = ptr.m_ptr;
+	refCount = ptr.refCount;
+	++(*refCount);
+}
+
+template<typename T>
+SharedPtr<T>& SharedPtr<T>::operator=(T * ptr)
 {
 	--(*refCount);
 	if(*refCount == 0)
