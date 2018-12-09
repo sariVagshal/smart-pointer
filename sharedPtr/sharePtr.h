@@ -31,28 +31,32 @@ private:
 	size_t * refCount;
 };
 
-	
+
 template<typename T>
-SharedPtr<T>::SharedPtr(T* ptr)
+SharedPtr<T>::SharedPtr(T* ptr):m_ptr(ptr)
 {
-	m_ptr = ptr;
-	refCount = new size_t;
-	*refCount = 1;
+	try
+	{
+		 refCount = new size_t(1);
+	}
+	catch(std::badalloc& e)
+	{
+		delete ptr;
+		throw;
+	}
 }
 
 template<typename T>    
-SharedPtr<T>::SharedPtr(const SharedPtr & sp)
+SharedPtr<T>::SharedPtr(const SharedPtr & sp):m_ptr(sp.m_ptr), refCount(sp.refCount)
 {
-	m_ptr = sp.m_ptr;
-	refCount = sp.refCount;
 	++(*refCount);
 }
 
 template<typename T>
 SharedPtr<T>::~SharedPtr()
 {
-	if (*refCount == 1)
-		delete m_ptr;
+	reset();
+	
 }
 
 template<typename T>
@@ -74,30 +78,35 @@ T& SharedPtr<T>::operator*()  const
 template<typename T>
 SharedPtr<T>& SharedPtr<T>::operator=(const SharedPtr<T>& ptr)
 {
-	--(*refCount);
-	if(*refCount == 0)
-		delete m_ptr;
+	reset();
+		
 	m_ptr = ptr.m_ptr;
 	refCount = ptr.refCount;
 	++(*refCount);
+	
+	return *this;
 }
 
 template<typename T>
 SharedPtr<T>& SharedPtr<T>::operator=(T * ptr)
 {
-	--(*refCount);
-	if(*refCount == 0)
-		delete m_ptr;
+	reset();
+	
 	m_ptr = ptr.m_ptr;
-	refCount = ptr.refCount;
-	++(*refCount);
+	refCount = new size_t(1);
+	
+	return *this;
 }
 
 template<typename T>
 void SharedPtr<T>::reset()
 {
-	delete m_ptr;
-	m_ptr = NULL;
+	--(*refCount);
+	if(*refCount == 0)
+	{
+		delete m_ptr;
+		delete refCount;
+	}
 }
 	
 template<typename T>
