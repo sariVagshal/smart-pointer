@@ -13,7 +13,7 @@ public:
     T* operator->() const;
     T& operator*()  const;
 
-	SharedPtr& operator= (T* ptr);
+	SharedPtr& operator= (const SharedPtr& ptr);
 	void reset();
 	
 	bool operator!=(const SharedPtr&) const;
@@ -23,7 +23,7 @@ public:
 	
     T* get() const;	
 	
-	
+	size_t getCounter() const;
 private:
 	T * m_ptr;
 	size_t * refCount;
@@ -70,7 +70,7 @@ T& SharedPtr<T>::operator*()  const
 }
 
 template<typename T>
-SharedPtr<T>& SharedPtr<T>::operator=(T* ptr)
+SharedPtr<T>& SharedPtr<T>::operator=(const SharedPtr<T>& ptr)
 {
 	--(*refCount);
 	if(*refCount == 0)
@@ -111,5 +111,10 @@ T* SharedPtr<T>::get() const
 	return m_ptr;
 }	
 	
+template<typename T>	
+size_t SharedPtr<T>::getCounter() const
+{
+	return *refCount;
+}
 	
-#enfif //__SHAREDPTR_H__
+#endif //__SHAREDPTR_H__
