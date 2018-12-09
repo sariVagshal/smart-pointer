@@ -58,7 +58,7 @@ template<typename T>
 T* SharedPtr<T>::operator->() const
 {
 	if (!m_ptr)
-		throw std::invalid_argument::invalid_argument();
+		throw std::invalid_argument("its a NULL pointer");
 	return m_ptr;
 }
 
@@ -66,7 +66,7 @@ template<typename T>
 T& SharedPtr<T>::operator*()  const
 {
 	if (!m_ptr)
-		throw std::invalid_argument::invalid_argument();
+		throw std::invalid_argument("its a NULL pointer");
 	return *m_ptr;
 }
 

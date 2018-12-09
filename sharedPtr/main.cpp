@@ -1,5 +1,5 @@
 #include "sharePtr.h"
-#include "person.h"
+#include "Person.h"
 #include <iostream>
 #include <cstddef>//NULL
 #include <cstring>//strcmp
