@@ -105,31 +105,31 @@ void SharedPtr<T>::reset()
 }
 	
 template<typename T>
-bool SharedPtr<T>::operator!=(const SharedPtr& sp) const
+inline bool SharedPtr<T>::operator!=(const SharedPtr& sp) const
 {
 	return m_ptr != sp.m_ptr;
 }
 	
 template<typename T>
-bool SharedPtr<T>::operator==(const SharedPtr& sp) const
+inline bool SharedPtr<T>::operator==(const SharedPtr& sp) const
 {
 	return m_ptr != sp.m_ptr;
 }
 
 template<typename T>
-SharedPtr<T>::operator bool() const
+inline SharedPtr<T>::operator bool() const
 {
 	return m_ptr;
 }
 
 template<typename T>	
-T* SharedPtr<T>::get() const
+inline T* SharedPtr<T>::get() const
 {
 	return m_ptr;
 }	
 	
 template<typename T>	
-size_t SharedPtr<T>::getCounter() const
+inline size_t SharedPtr<T>::getCounter() const
 {
 	return *refCount;
 }
