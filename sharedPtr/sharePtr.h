@@ -33,17 +33,12 @@ private:
 
 
 template<typename T>
-SharedPtr<T>::SharedPtr(T* ptr):m_ptr(ptr)
+SharedPtr<T>::SharedPtr(T* ptr)try :m_ptr(ptr), refCount(new size_t(1))
+{}
+catch(std::bad_alloc& e)
 {
-	try
-	{
-		 refCount = new size_t(1);
-	}
-	catch(std::badalloc& e)
-	{
-		delete ptr;
-		throw;
-	}
+	delete ptr;		
+	throw;
 }
 
 template<typename T>    
