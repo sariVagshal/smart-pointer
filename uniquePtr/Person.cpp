@@ -8,19 +8,15 @@ using std::endl;
 Person::Person():ID(0), age(0)
 {
 	strcpy(fullName, "---");
-	cout << "DEFAULT CTOR Person" << endl;
 }
 
 Person::Person(const char* name, unsigned int id, unsigned char agePeople):ID(id), age(agePeople)
 {
 	strcpy(fullName, name);
-	cout << "CTOR Person"<<endl;
 }
 
 Person::~Person()
-{
-	cout<<"DTOR Person"<<endl;
-}
+{}
 	
 	
 void Person::setName(const char * name)
