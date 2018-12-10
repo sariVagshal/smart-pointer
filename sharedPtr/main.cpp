@@ -101,6 +101,7 @@ void testAssignmentOperator()
     std::cout << "not passed test assignment operator" << std::endl;
 }
 
+
 int main()
 {
 	std::cout << "Hi!\n\n";

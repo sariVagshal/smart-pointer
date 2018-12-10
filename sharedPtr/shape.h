@@ -1,5 +1,6 @@
 #include "sharePtr.h"
 #include "Person.h"
+#include <iostream>
 
 class Shape
 {
@@ -19,11 +20,3 @@ private:
     double m_w, m_h;
 };
 
-Rectangle* rectPt( new Rectangle(22.2, 11.1) );
-Shape* shapePt(rectPt); // Compiles and works well
-
-SharedPtr<Rectangle> rectSPt( new Rectangle(22.2, 11.1) );
-SharedPtr<Shape> shapeSPt(rectSPt); // Will not compile, but should
-
-SharedPtr<Person> personSpt( new Person("Kyle") );
-SharedPtr<Shape> shapeSPt(personSpt); // Should never compile

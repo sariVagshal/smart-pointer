@@ -9,22 +9,34 @@ public:
     explicit SharedPtr(T* = NULL);
     SharedPtr(const SharedPtr &);
     ~SharedPtr();
+    
+    
+    template<class U>
+    friend class SharedPtr;
+    
+    template<class U>
+    SharedPtr(const SharedPtr<U>& ptr);
+
 
     T* operator->() const;
     T& operator*()  const;
 
+
 	SharedPtr& operator= (const SharedPtr& ptr);
 	SharedPtr& operator= (T * ptr);
 	
+	
 	void reset();
+	
 	
 	bool operator!=(const SharedPtr&) const;
 	bool operator==(const SharedPtr&) const;
 
+
 	operator bool() const;
 	
-    T* get() const;	
 	
+    T* get() const;	
 	size_t getCounter() const;
 private:
 	T * m_ptr;
@@ -51,7 +63,13 @@ template<typename T>
 SharedPtr<T>::~SharedPtr()
 {
 	reset();
-	
+}
+
+template<typename T>
+template<class U>
+SharedPtr<T>::SharedPtr(const SharedPtr<U>& ptr):m_ptr(ptr.m_ptr), refCount(ptr.refCount)
+{
+	++(*refCount);
 }
 
 template<typename T>
