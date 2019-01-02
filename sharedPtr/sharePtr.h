@@ -131,7 +131,7 @@ inline bool SharedPtr<T>::operator!=(const SharedPtr& sp) const
 template<typename T>
 inline bool SharedPtr<T>::operator==(const SharedPtr& sp) const
 {
-	return m_ptr != sp.m_ptr;
+	return m_ptr == sp.m_ptr;
 }
 
 template<typename T>
